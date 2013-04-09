@@ -126,7 +126,7 @@
     <Component class="javax.swing.JButton" name="Guardar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/GranEmpresa/1363051449_3floppy_unmount.png"/>
+          <Image iconType="3" name="/GranEmpresa/img/1363051449_3floppy_unmount.png"/>
         </Property>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Cursor de Mano"/>
@@ -279,7 +279,7 @@
     <Component class="javax.swing.JButton" name="regresar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/GranEmpresa/regresar.png"/>
+          <Image iconType="3" name="/GranEmpresa/img/regresar.png"/>
         </Property>
       </Properties>
       <Events>

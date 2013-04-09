@@ -6,6 +6,7 @@ package GranEmpresa.Productos;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -16,8 +17,74 @@ public class NuevoProducto extends javax.swing.JFrame {
     /**
      * Creates new form nuevoConcepto
      */
+    Connection sesion;
+    //VARIABLES PARA LOS CAMPOS DE "Medidas"
+    DefaultComboBoxModel ModeloMed = new DefaultComboBoxModel();
+    String ClaveMed;
+    String DescMed;
+    
+    //VARIABLES PARA LOS CAMPOS DE "Categorias"
+    DefaultComboBoxModel ModeloCat = new DefaultComboBoxModel();
+    String ClaveCat;
+    String NombreCat;
+    
+    //VARIABLES PARA LOS CAMPOS DE "Proveedores"
+    DefaultComboBoxModel ModeloProv = new DefaultComboBoxModel();
+    String ClaveProv;
+    String NombreProv;
+    String Domicilio;
+    String CURP;
+    String RFC;
+    String Tel;
+    String Correo;
+    String PWeb;
+    
     public NuevoProducto() {
         initComponents();
+        try{
+            sesion=DriverManager.getConnection("jdbc:odbc:conectar");
+            Statement sel= sesion.createStatement();
+            //Cargar en el los datos en el ComboBox de medidas
+            ResultSet rpt= sel.executeQuery("SELECT * FROM Medidas");
+            while(rpt.next()){
+               ClaveMed=rpt.getString(1);
+               DescMed=rpt.getString(2);
+               ModeloMed.addElement(DescMed);
+            }
+            rpt.close();
+            medida.setModel(ModeloMed);
+            
+            //Cargar en el los datos en el ComboBox de Categorías
+            rpt= sel.executeQuery("SELECT * FROM Categorias");
+            while(rpt.next()){
+               ClaveCat=rpt.getString(1);
+               NombreCat=rpt.getString(2);
+               ModeloCat.addElement(NombreCat);
+            }
+            rpt.close();
+            categoria.setModel(ModeloCat);
+        
+            //Cargar en el los datos en el ComboBox de Proveedores
+            rpt= sel.executeQuery("SELECT * FROM Proveedores");
+            while(rpt.next()){
+               ClaveProv=rpt.getString(1);
+               NombreProv=rpt.getString(2);
+               Domicilio=rpt.getString(3);
+               CURP=rpt.getString(4);
+               RFC=rpt.getString(5);
+               Tel=rpt.getString(6);
+               Correo=rpt.getString(7);
+               PWeb=rpt.getString(8);
+               ModeloProv.addElement(NombreProv);
+            }
+            rpt.close();
+            proveedor.setModel(ModeloProv);
+        
+        }
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(this, "ERROR AL OBTENER DATOS DE LOS PRODUCTOS");
+        }
+        
     }
 
     /**
@@ -48,7 +115,7 @@ public class NuevoProducto extends javax.swing.JFrame {
         cantidad = new javax.swing.JSpinner();
         regresar = new javax.swing.JButton();
 
-        Guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/1363051449_3floppy_unmount.png"))); // NOI18N
+        Guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/1363051449_3floppy_unmount.png"))); // NOI18N
         Guardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Guardar.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         Guardar.addActionListener(new java.awt.event.ActionListener() {
@@ -67,7 +134,7 @@ public class NuevoProducto extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setLabelFor(descripcion);
-        jLabel10.setText("DescripciÃ³n:");
+        jLabel10.setText("Descripción:");
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setLabelFor(precio);
@@ -83,7 +150,7 @@ public class NuevoProducto extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setLabelFor(categoria);
-        jLabel14.setText("CategorÃ­a:");
+        jLabel14.setText("Categoría:");
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel15.setLabelFor(proveedor);
@@ -103,7 +170,7 @@ public class NuevoProducto extends javax.swing.JFrame {
 
         cantidad.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
 
-        regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/regresar.png"))); // NOI18N
+        regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/regresar.png"))); // NOI18N
         regresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 regresarActionPerformed(evt);
@@ -198,33 +265,73 @@ public class NuevoProducto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-      
+      //Validación del formulario
         if ("".equals(nombre.getText())){
             JOptionPane.showMessageDialog(this, "Debe ingresar un nombre");
             nombre.requestFocus();
         }else if ("".equals(descripcion.getText())){
-            JOptionPane.showMessageDialog(this, "Debe ingresar una descripciÃ³n");
+            JOptionPane.showMessageDialog(this, "Debe ingresar una descripción");
             descripcion.requestFocus();
         }else if ("".equals(precio.getText())){
             JOptionPane.showMessageDialog(this, "Debe ingresar el precio");
             precio.requestFocus();
-        }else if (medida.getSelectedIndex()<1){
+        }else if (medida.getSelectedIndex()<0){
             JOptionPane.showMessageDialog(this, "Debe elegir una unidad de medida");
             medida.requestFocus();
-        }else if (categoria.getSelectedIndex()<1){
-            JOptionPane.showMessageDialog(this, "Debe elegir una categorÃ­a");
+        }else if (categoria.getSelectedIndex()<0){
+            JOptionPane.showMessageDialog(this, "Debe elegir una categoría");
             categoria.requestFocus();
-        }else if (proveedor.getSelectedIndex()<1){
+        }else if (proveedor.getSelectedIndex()<0){
             JOptionPane.showMessageDialog(this, "Debe elegir a un proveedor");
             proveedor.requestFocus();
         }else{
-            JOptionPane.showMessageDialog(this, "Los datos han sido guardados exitosamente");
+           
+            try{
+                sesion=DriverManager.getConnection("jdbc:odbc:conectar");
+                Statement sel= sesion.createStatement();
+                //Buscar los datos de los ComboBox seleccionados
+                ResultSet rpt= sel.executeQuery("SELECT * FROM Medidas WHERE Descripcion='"+(medida.getSelectedItem()).toString()+"'");
+                rpt.next();
+                ClaveMed=rpt.getString(1);
+                rpt.close();
+                        
+                rpt= sel.executeQuery("SELECT * FROM Categorias WHERE Nombre='"+(categoria.getSelectedItem()).toString()+"'");
+                rpt.next();
+                ClaveCat=rpt.getString(1);
+                rpt.close();
+                
+                rpt= sel.executeQuery("SELECT * FROM Proveedores WHERE Nombre='"+(proveedor.getSelectedItem()).toString()+"'");
+                rpt.next();
+                ClaveProv=rpt.getString(1);
+                rpt.close();
+                
+                //Obtener el último producto
+                int ClaveProd=0;
+                rpt= sel.executeQuery("SELECT * FROM Productos");
+                while(rpt.next()){
+                    ClaveProd=rpt.getInt(1);
+                }
+                ClaveProd=ClaveProd+1;
+                rpt.close();
+                
+                String ClaveProdCat=ClaveCat+"-"+Integer.toString(ClaveProd);
+                
+                rpt= sel.executeQuery("INSERT INTO Productos VALUES('"+Integer.toString(ClaveProd)+"','"+nombre.getText()+"','"+descripcion.getText()+"',"+Float.parseFloat(precio.getText())+","+Integer.parseInt(cantidad.getValue().toString())+",'"+ClaveProv+"','"+ClaveMed+"','"+ClaveCat+"','"+ClaveProdCat+"')");
+                rpt.close();   
+                JOptionPane.showMessageDialog(this, "Los datos han sido guardados exitosamente");
+                this.hide();
+                new Productos().show();
+                
+                
+            }
+            catch(SQLException e){
+                this.hide();
+                new Productos().show();
+            }
+           
         }
-        
-        
-        /*DefaultTableModel modelo = (DefaultTableModel)Productos.jTable1.getModel();
-            modelo.addRow(new Object[]{Clave.getText(),Nombre.getText(),Descripcion.getText(),});
-        */
+       
+     
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarActionPerformed

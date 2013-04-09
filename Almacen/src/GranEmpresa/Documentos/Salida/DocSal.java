@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GranEmpresa;
+package GranEmpresa.Documentos.Salida;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -45,19 +45,17 @@ public class DocSal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
         jLabel1.setText("Documentos de Salida");
 
-        nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/nuevo.png"))); // NOI18N
+        nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/nuevo.png"))); // NOI18N
 
-        buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/Buscar.png"))); // NOI18N
+        buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/Buscar.png"))); // NOI18N
 
-        borrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/borrar.png"))); // NOI18N
+        borrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/borrar.png"))); // NOI18N
 
-        regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/regresar.png"))); // NOI18N
+        regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/regresar.png"))); // NOI18N
         regresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 regresarActionPerformed(evt);
@@ -66,16 +64,7 @@ public class DocSal extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Clave", "Fecha", "Destino", "Concepto"
@@ -112,7 +101,7 @@ public class DocSal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 18, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18))
         );

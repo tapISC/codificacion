@@ -54,16 +54,7 @@ public class Conceptos extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Clave", "Nombre"
@@ -79,28 +70,28 @@ public class Conceptos extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        Agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/nuevo.png"))); // NOI18N
+        Agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/nuevo.png"))); // NOI18N
         Agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AgregarActionPerformed(evt);
             }
         });
 
-        Modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/modificar.png"))); // NOI18N
+        Modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/modificar.png"))); // NOI18N
         Modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ModificarActionPerformed(evt);
             }
         });
 
-        Eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/borrar.png"))); // NOI18N
+        Eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/borrar.png"))); // NOI18N
         Eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EliminarActionPerformed(evt);
             }
         });
 
-        Regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/regresar.png"))); // NOI18N
+        Regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/regresar.png"))); // NOI18N
         Regresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RegresarActionPerformed(evt);
@@ -145,7 +136,7 @@ public class Conceptos extends javax.swing.JFrame {
                     .addComponent(Modificar)
                     .addComponent(Agregar)
                     .addComponent(Regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

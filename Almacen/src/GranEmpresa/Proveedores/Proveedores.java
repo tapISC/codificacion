@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package GranEmpresa;
+package GranEmpresa.Proveedores;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -46,19 +46,32 @@ public class Proveedores extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         buscar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
         jLabel1.setText("Proveedores");
 
-        nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/nuevo.png"))); // NOI18N
+        nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/nuevo.png"))); // NOI18N
+        nuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoActionPerformed(evt);
+            }
+        });
 
-        borrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/borrar.png"))); // NOI18N
+        borrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/borrar.png"))); // NOI18N
+        borrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                borrarActionPerformed(evt);
+            }
+        });
 
-        modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/modificar.png"))); // NOI18N
+        modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/modificar.png"))); // NOI18N
+        modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarActionPerformed(evt);
+            }
+        });
 
-        regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/regresar.png"))); // NOI18N
+        regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/regresar.png"))); // NOI18N
         regresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 regresarActionPerformed(evt);
@@ -67,16 +80,7 @@ public class Proveedores extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Clave", "Nombre", "Domicilio", "CURP", "RFC", "Teléfono", "Correo", "Página Web"
@@ -92,7 +96,12 @@ public class Proveedores extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/Buscar.png"))); // NOI18N
+        buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/Buscar.png"))); // NOI18N
+        buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -144,6 +153,42 @@ public class Proveedores extends javax.swing.JFrame {
     private void regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarActionPerformed
          this.hide();
     }//GEN-LAST:event_regresarActionPerformed
+
+    private void nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoActionPerformed
+       this.hide();
+       new NuevoProveedor().show();
+    }//GEN-LAST:event_nuevoActionPerformed
+
+    private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
+       int i=0;
+       i = jTable1.getSelectedRow();
+       if (i==-1){
+           JOptionPane.showMessageDialog(null,"Debe seleccionar una fila");
+           jTable1.requestFocus();
+       }else{
+           this.hide();
+           new ModificarProveedor().show();
+       }   
+    }//GEN-LAST:event_modificarActionPerformed
+
+    private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
+       this.hide();
+       new BuscarProveedor().show();
+    }//GEN-LAST:event_buscarActionPerformed
+
+    private void borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarActionPerformed
+        int i=0;
+       i = jTable1.getSelectedRow();
+       if (i==-1){
+           JOptionPane.showMessageDialog(null,"Debe seleccionar una fila");
+           jTable1.requestFocus();
+       }else{
+           int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea borrar éste registro?");
+           if(confirm==0){
+               JOptionPane.showMessageDialog(null,"Datos eliminados");
+           }
+       }
+    }//GEN-LAST:event_borrarActionPerformed
 
     /**
      * @param args the command line arguments

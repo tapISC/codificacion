@@ -5,7 +5,6 @@
 package GranEmpresa.Productos;
 import java.sql.*;
 
-import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.table.*;
 
@@ -19,6 +18,7 @@ public class Productos extends javax.swing.JFrame {
     /**
      * Creates new form Productos
      */
+    public static String ClaveProdActual=""; 
     public Productos() {
         initComponents();
         
@@ -37,7 +37,7 @@ public class Productos extends javax.swing.JFrame {
             sesion=DriverManager.getConnection("jdbc:odbc:conectar");
            
             Connection sesion2;
-            sesion2=DriverManager.getConnection("jdbc:odbc:conectar"); //Se realizan dos conexiones para acceder a la relaci√≥m
+            sesion2=DriverManager.getConnection("jdbc:odbc:conectar"); //Se realizan dos conexiones para acceder a la relaciÛm
             
           Statement sel= sesion.createStatement();
           Statement sel2= sesion2.createStatement();
@@ -45,7 +45,7 @@ public class Productos extends javax.swing.JFrame {
           ResultSet temprel;
           
           ResultSet rpt= sel.executeQuery("SELECT * FROM Productos");
-          while(rpt.next()){//Se leer√°n mientras existan registros siguientes
+          while(rpt.next()){//Se leer·n mientras existan registros siguientes
             //Se leen en variables los campos de la tabla
             ClaveProd=rpt.getString(1);
             Nombre=rpt.getString(2);
@@ -56,12 +56,12 @@ public class Productos extends javax.swing.JFrame {
             ClaveMed=rpt.getString(7);
             ClaveCat=rpt.getString(8);
             ClaveProdCat=rpt.getString(9);
-            //Se agregan de manera c√≠clica los registros a un modelo
+            //Se agregan de manera cÌclica los registros a un modelo
             //Dicho modelo se cargara en la tabla por cada registro.
             
-            String MEDIDA="";//SE NECESITA OBTENER EL NOMBRE DE LA MEDIDA POR MEDIO DE LA RELACI√ìN
-            String PROVEEDOR="";//SE NECESITA OBTENER EL NOMBRE DEL PROVEEDOR POR MEDIO DE LA RELACI√ìN
-            String CATEGORIA="";//SE NECESITA OBTENER EL NOMBRE DE LA CATEGOR√çA POR MEDIO DE LA RELACI√ìN
+            String MEDIDA="";//SE NECESITA OBTENER EL NOMBRE DE LA MEDIDA POR MEDIO DE LA RELACI”N
+            String PROVEEDOR="";//SE NECESITA OBTENER EL NOMBRE DEL PROVEEDOR POR MEDIO DE LA RELACI”N
+            String CATEGORIA="";//SE NECESITA OBTENER EL NOMBRE DE LA CATEGORÕA POR MEDIO DE LA RELACI”N
             
             temprel= sel2.executeQuery("SELECT * FROM Proveedores WHERE ClaveProv='"+ClaveProv+"'"); 
             temprel.next();
@@ -116,28 +116,28 @@ public class Productos extends javax.swing.JFrame {
         Fecha.setForeground(new java.awt.Color(0, 0, 255));
         Fecha.setText("Productos");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/nuevo.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/nuevo.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/modificar.png"))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/modificar.png"))); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/borrar.png"))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/borrar.png"))); // NOI18N
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/regresar.png"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/regresar.png"))); // NOI18N
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -149,11 +149,11 @@ public class Productos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Clave", "Nombre", "Descripci√≥n", "Precio", "Cantidad", "Medida", "Categor√≠a", "Proveedor"
+                "Clave", "Nombre", "DescripciÛn", "Precio", "Cantidad", "Medida", "CategorÌa", "Proveedor"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, true, true
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -162,7 +162,7 @@ public class Productos extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        Buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/Buscar.png"))); // NOI18N
+        Buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/Buscar.png"))); // NOI18N
         Buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BuscarActionPerformed(evt);
@@ -182,9 +182,9 @@ public class Productos extends javax.swing.JFrame {
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(48, 48, 48)
                         .addComponent(jButton3)
-                        .addGap(45, 45, 45)
+                        .addGap(44, 44, 44)
                         .addComponent(Buscar)
-                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -211,9 +211,9 @@ public class Productos extends javax.swing.JFrame {
                     .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(13, 13, 13))
+                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -235,6 +235,7 @@ public class Productos extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null,"Debe seleccionar una fila");
            jTable1.requestFocus();
        }else{
+           ClaveProdActual=jTable1.getValueAt(i, 0).toString(); 
            this.hide();
            new ModificarProducto().show();
        }
@@ -256,9 +257,22 @@ public class Productos extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null,"Debe seleccionar una fila");
            jTable1.requestFocus();
        }else{
-           int confirm = JOptionPane.showConfirmDialog(this, "¬øEst√° seguro de que desea borrar √©ste registro?");
+           int confirm = JOptionPane.showConfirmDialog(this, "øEst· seguro de que desea borrar Èste registro?");
            if(confirm==0){
-               JOptionPane.showMessageDialog(null,"Datos eliminados");
+               String ElementoBorrado=jTable1.getValueAt(i, 0).toString();
+               try{
+                sesion=DriverManager.getConnection("jdbc:odbc:conectar");     
+                Statement sel= sesion.createStatement();
+                ResultSet rpt= sel.executeQuery("DELETE FROM Productos WHERE ClaveProdCat='"+ElementoBorrado+"'");
+                rpt.next();
+                JOptionPane.showMessageDialog(null,"Datos eliminados");
+                this.hide();
+                new Productos().show();
+               }
+               catch(SQLException e){
+                   this.hide();
+                   new Productos().show();
+               }
            }
        }
     }//GEN-LAST:event_jButton3ActionPerformed

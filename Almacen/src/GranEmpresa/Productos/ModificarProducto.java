@@ -3,7 +3,8 @@
  * and open the template in the editor.
  */
 package GranEmpresa.Productos;
-
+import java.sql.*;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,8 +16,96 @@ public class ModificarProducto extends javax.swing.JFrame {
     /**
      * Creates new form ModificarProducto
      */
+    Connection sesion;
+    //VARIABLES PARA LOS CAMPOS DE "Medidas"
+    DefaultComboBoxModel ModeloMed = new DefaultComboBoxModel();
+    String ClaveMed;
+    String DescMed;
+    
+    //VARIABLES PARA LOS CAMPOS DE "Categorias"
+    DefaultComboBoxModel ModeloCat = new DefaultComboBoxModel();
+    String ClaveCat;
+    String NombreCat;
+    
+    //VARIABLES PARA LOS CAMPOS DE "Proveedores"
+    DefaultComboBoxModel ModeloProv = new DefaultComboBoxModel();
+    String ClaveProv;
+    String NombreProv;
+    String Domicilio;
+    String CURP;
+    String RFC;
+    String Tel;
+    String Correo;
+    String PWeb;
+    
+    //VARIABLES PARA LOS CAMPOS DE "Productos"
+    DefaultComboBoxModel ModeloProd = new DefaultComboBoxModel();
+    String ClaveProd;
+    String NombreProd;
+    String DescProd;
+    float PrecioProd;
+    int CantProd;
+    
     public ModificarProducto() {
         initComponents();
+        try{
+            sesion=DriverManager.getConnection("jdbc:odbc:conectar");
+            Statement sel= sesion.createStatement();
+            //Cargar en el los datos en el ComboBox de medidas
+            ResultSet rpt= sel.executeQuery("SELECT * FROM Medidas");
+            while(rpt.next()){
+               ClaveMed=rpt.getString(1);
+               DescMed=rpt.getString(2);
+               ModeloMed.addElement(DescMed);
+            }
+            rpt.close();
+            medida.setModel(ModeloMed);
+            
+            //Cargar en el los datos en el ComboBox de Categorías
+            rpt= sel.executeQuery("SELECT * FROM Categorias");
+            while(rpt.next()){
+               ClaveCat=rpt.getString(1);
+               NombreCat=rpt.getString(2);
+               ModeloCat.addElement(NombreCat);
+            }
+            rpt.close();
+            categoria.setModel(ModeloCat);
+        
+            //Cargar en el los datos en el ComboBox de Proveedores
+            rpt= sel.executeQuery("SELECT * FROM Proveedores");
+            while(rpt.next()){
+               ClaveProv=rpt.getString(1);
+               NombreProv=rpt.getString(2);
+               Domicilio=rpt.getString(3);
+               CURP=rpt.getString(4);
+               RFC=rpt.getString(5);
+               Tel=rpt.getString(6);
+               Correo=rpt.getString(7);
+               PWeb=rpt.getString(8);
+               ModeloProv.addElement(NombreProv);
+            }
+            rpt.close();
+            proveedor.setModel(ModeloProv);
+            
+            rpt= sel.executeQuery("SELECT * FROM Productos WHERE ClaveProdCat='"+Productos.ClaveProdActual+"'");
+            rpt.next();
+            ClaveProd=rpt.getString(1);
+            NombreProd=rpt.getString(2);
+            DescProd=rpt.getString(3);
+            PrecioProd=rpt.getFloat(4);
+            CantProd=rpt.getInt(5);
+            rpt.close();
+            
+            nombre.setText(NombreProd);
+            descripcion.setText(DescProd);
+            precio.setText(Float.toString(PrecioProd));
+            cantidad.setValue(CantProd);
+            
+        }
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(this, "ERROR AL OBTENER DATOS DE LOS PRODUCTOS");
+        }
+        
     }
 
     /**
@@ -47,6 +136,12 @@ public class ModificarProducto extends javax.swing.JFrame {
         guardar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 255));
         jLabel1.setText("Modificar Producto");
@@ -55,7 +150,7 @@ public class ModificarProducto extends javax.swing.JFrame {
         jLabel2.setText("Nombre:");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("DescripciÃ³n:");
+        jLabel3.setText("Descripción:");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Precio Unitario:   $");
@@ -67,7 +162,7 @@ public class ModificarProducto extends javax.swing.JFrame {
         jLabel6.setText("Medida:");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setText("CategorÃ­a:");
+        jLabel7.setText("Categoría:");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setText("Proveedor:");
@@ -80,14 +175,14 @@ public class ModificarProducto extends javax.swing.JFrame {
 
         proveedor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<Ninguno>" }));
 
-        guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/1363051449_3floppy_unmount.png"))); // NOI18N
+        guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/1363051449_3floppy_unmount.png"))); // NOI18N
         guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 guardarActionPerformed(evt);
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/regresar.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GranEmpresa/img/regresar.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -182,7 +277,7 @@ public class ModificarProducto extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -198,17 +293,58 @@ public class ModificarProducto extends javax.swing.JFrame {
         }else if ("".equals(precio.getText())){
             JOptionPane.showMessageDialog(this, "Debe ingresar el precio");
             precio.requestFocus();
-        }else if (medida.getSelectedIndex()<1){
+        }else if (medida.getSelectedIndex()<0){
             JOptionPane.showMessageDialog(this, "Debe elegir una unidad de medida");
             medida.requestFocus();
-        }else if (categoria.getSelectedIndex()<1){
+        }else if (categoria.getSelectedIndex()<0){
             JOptionPane.showMessageDialog(this, "Debe elegir una categorÃ­a");
             categoria.requestFocus();
-        }else if (proveedor.getSelectedIndex()<1){
+        }else if (proveedor.getSelectedIndex()<0){
             JOptionPane.showMessageDialog(this, "Debe elegir a un proveedor");
             proveedor.requestFocus();
         }else{
-            JOptionPane.showMessageDialog(this, "Los datos han sido modificados exitosamente");
+            try{
+                sesion=DriverManager.getConnection("jdbc:odbc:conectar");
+                Statement sel= sesion.createStatement();
+                
+                ResultSet rpt= sel.executeQuery("SELECT * FROM Medidas WHERE Descripcion='"+(medida.getSelectedItem()).toString()+"'");
+                rpt.next();
+                ClaveMed=rpt.getString(1);
+                rpt.close();
+                        
+                rpt= sel.executeQuery("SELECT * FROM Categorias WHERE Nombre='"+(categoria.getSelectedItem()).toString()+"'");
+                rpt.next();
+                ClaveCat=rpt.getString(1);
+                rpt.close();
+                
+                rpt= sel.executeQuery("SELECT * FROM Proveedores WHERE Nombre='"+(proveedor.getSelectedItem()).toString()+"'");
+                rpt.next();
+                ClaveProv=rpt.getString(1);
+                rpt.close();
+                
+                rpt= sel.executeQuery("UPDATE Productos"
+                        + " SET ClaveProd='"+ClaveProd+"'"
+                        + ", Nombre='"+nombre.getText()+"'"
+                        + ", Descripcion='"+descripcion.getText()+"'"
+                        + ", Precio="+Float.parseFloat(precio.getText())+""
+                        + ", Cantidad="+Integer.parseInt(cantidad.getValue().toString())+""
+                        + ", ClaveMed='"+ClaveMed+"'"
+                        + ", ClaveCat='"+ClaveCat+"'"
+                        + ", ClaveProv='"+ClaveProv+"'"
+                        + ", ClaveProdCat='"+ClaveCat+"-"+ClaveProd+"'"
+                        + " WHERE ClaveProdCat='"+Productos.ClaveProdActual+"'");
+                rpt.next();
+                rpt.close();
+                
+                
+                JOptionPane.showMessageDialog(this, "Los datos han sido modificados exitosamente");
+                this.hide();
+                new Productos().show();
+            }
+            catch(SQLException e){
+                this.hide();
+                new Productos().show();
+            }
         }
     }//GEN-LAST:event_guardarActionPerformed
 
@@ -216,6 +352,10 @@ public class ModificarProducto extends javax.swing.JFrame {
         this.hide();
         new Productos().show();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments
